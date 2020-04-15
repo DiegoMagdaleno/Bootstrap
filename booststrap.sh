@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 DOWNDIR=/tmp
 PREFIX=/opt/neo

@@ -718,7 +718,7 @@ function build_apt(){
     tar -xzf apt-2.0.0+DarwinFinal.tar.gz
     cd apt-2.0.0+DarwinFinal
     cd ./darwin/scripts
-    chmod a+x *
+    chmod a+x -- *
     ./missing.sh
     ./patch.sh
     cd ..

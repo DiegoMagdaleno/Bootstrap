@@ -111,7 +111,7 @@ function build_indispensable(){
     cd wget-1.20.3
     ./configure --prefix=$PREFIX --sysconfdir=$PREFIX/etc --with-ssl=openssl --with-libssl-prefix=$PREFIX gl_cv_func_ftello_works=yes --disable-debug --disable-pcre --disable-pcre2 --without-libpsl &> $CONFIGURE/wget.log 
     make &> $MAKE/wget.log
-    make install &> $BUILD/wget.log
+    make install &> $INSTALL/wget.log
 }
 
 function build_pkgconfig(){ 

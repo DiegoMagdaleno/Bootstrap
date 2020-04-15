@@ -506,7 +506,7 @@ function build_gnutls(){
     tar -xzf gnutls-3.6.13.tar.xz
     cd gnutls-3.6.13
     ./configure --disable-dependency-tracking --disable-silent-rules --disable-static --prefix=$PREFIX --sysconfdir=$PREFIX/etc --with-default-trust-store-file=$PREFIX/etc/openssl/cert.pem --disable-guile --disable-heartbeat-support --with-p11-kit gl_cv_func_ftello_works=yes
-    make install LDFLAGS="-L$PREFIX/lib" export CPPFLAGS=-I$PREFIX/include
+    make install LDFLAGS="-L$PREFIX/lib" CPPFLAGS=-I$PREFIX/include
     mv $PREFIX/bin/certtool $PREFIX/bin/gnutls-certtool
     mv $PREFIX/share/man/man1/certtool.1 $PREFIX/share/man/man1/gnutls-certtool.1 
 }
@@ -730,9 +730,26 @@ function build_apt(){
 
 
 (
-    #set -e
+    set -e
     set -o history -o histexpand
     build_gnutls
+    build_libgpgerror
+    build_libassuan
+    build_libgcrypt
+    build_libksba
+    build_libusb
+    build_npth
+    build_pinetry
+    build_gnupg
+    build_berkeleydb
+    build_lz4
+    build_libatomic
+    build_bdwgc
+    build_w3m
+    build_triehash
+    build_gsed
+    build_docbook
+    build_po4a
    
 )
 

@@ -117,15 +117,15 @@ function build_indispensable(){
 function build_pkgconfig(){ 
     cd $DOWNDIR
     echo "\033[1;32m==> Getting bootstrap tool: pkg-config\033[0m"
-    $wget –quiet https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz --no-check-certificate --inet4-only
+    $wget https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz --no-check-certificate --inet4-only
     echo "\033[1;34m    ==> Unpacking bootstrap tool: pkg-config\033[0m"
     tar -xzf pkg-config-0.29.2.tar.gz
     cd pkg-config-0.29.2
     echo "\033[1;34m    ==> Building bootstrap tool: pkg-config\033[0m"
-    ./configure --disable-debug --prefix=$PREFIX --disable-host-tool --with-internal-glib >> $CONFIGURE/pkgconfig.log
-    make >> $MAKE/pkgconfig.log
-    make check >> $ADDITIONAL_STEPS/pkgconfig.log
-    make install >> $INSTALL/pkgconfig.log
+    ./configure --disable-debug --prefix=$PREFIX --disable-host-tool --with-internal-glib &> $CONFIGURE/pkgconfig.log
+    make &> $MAKE/pkgconfig.log
+    make check &> $ADDITIONAL_STEPS/pkgconfig.log
+    make install &> $INSTALL/pkgconfig.log
     echo "\033[1;33m==> pkg-config is built and ready to go\033[0m"
 }
 
@@ -134,7 +134,7 @@ function build_gtar(){
     sudo -i -u $SUDO_USER bash << EOF
     cd /tmp
     echo "\033[1;32m==> Getting bootstrap tool: gtar by GNU\033[0m"
-    $wget –quiet https://ftp.gnu.org/gnu/tar/tar-1.32.tar.gz --no-check-certificate --inet4-only
+    $wget https://ftp.gnu.org/gnu/tar/tar-1.32.tar.gz --no-check-certificate --inet4-only
     echo "\033[1;34m    ==> Unpacking bootstrap tool: gtar by GNU\033[0m"
     tar -xzf tar-1.32.tar.gz
     cd tar-1.32
@@ -152,7 +152,7 @@ EOF
 function build_gpatch(){
     cd $DOWNDIR
     echo "\033[1;32m==> Getting bootstrap tool: patch by GNU\033[0m"
-    $wget –quiet https://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz --no-check-certificate --inet4-only
+    $wget https://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz --no-check-certificate --inet4-only
     echo "\033[1;34m    ==> Unpacking bootstrap tool: patch by GNU\033[0m"
     tar -xzf patch-2.7.6.tar.xz
     cd patch-2.7.6
@@ -166,7 +166,7 @@ function build_gpatch(){
 function build_perl(){
     cd $DOWNDIR
     echo "\033[1;32m==> Getting bootstrap tool: Perl\033[0m"
-    $wget –quiet https://www.cpan.org/src/5.0/perl-5.30.1.tar.gz --no-check-certificate --inet4-only
+    $wget https://www.cpan.org/src/5.0/perl-5.30.1.tar.gz --no-check-certificate --inet4-only
     tar -xzf perl-5.30.1.tar.gz
     echo "\033[1;34m    ==> Unpacking bootstrap tool: Perl\033[0m"
     cd perl-5.30.1
@@ -194,7 +194,7 @@ function build_perl(){
 function build_xz(){
     cd $DOWNDIR
     echo "\033[1;32m==> Getting bootstrap tool: xz\033[0m"
-    $wget –quiet https://downloads.sourceforge.net/project/lzmautils/xz-5.2.4.tar.gz --no-check-certificate --inet4-only
+    $wget https://downloads.sourceforge.net/project/lzmautils/xz-5.2.4.tar.gz --no-check-certificate --inet4-only
     echo "\033[1;34m    ==> Unpacking bootstrap tool: xz\033[0m"
     tar -xzf xz-5.2.4.tar.gz
     echo "\033[1;34m    ==> Building bootstrap tool: xz\033[0m"
@@ -208,7 +208,7 @@ function build_xz(){
 function build_zstd(){
     cd $DOWNDIR
     echo "\033[1;32m==> Getting bootstrap tool: zstd\033[0m"
-    $wget –quiet https://github.com/facebook/zstd/archive/v1.4.4.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/facebook/zstd/archive/v1.4.4.tar.gz --no-check-certificate --inet4-only
     echo "\033[1;34m    ==> Unpacking bootstrap tool: zstd\033[0m"
     tar -xzf v1.4.4.tar.gz 
     echo "\033[1;34m    ==> Building bootstrap tool: zstd\033[0m"
@@ -221,7 +221,7 @@ function build_zstd(){
 function build_dpkg(){
     cd $DOWNDIR
     echo "\033[1;32m==> Building tool: dpkg\033[0m"
-    $wget –quiet http://archive.ubuntu.com/ubuntu/pool/main/d/dpkg/dpkg_1.19.7ubuntu2.tar.xz --no-check-certificate --inet4-only
+    $wget http://archive.ubuntu.com/ubuntu/pool/main/d/dpkg/dpkg_1.19.7ubuntu2.tar.xz --no-check-certificate --inet4-only
     echo "\033[1;34m    ==> Unpacking tool:dpkg\033[0m"
     tar -xzf dpkg_1.19.7ubuntu2.tar.xz
     cd dpkg
@@ -266,7 +266,7 @@ function get_ready_for_two(){
     echo "Finished step"
     echo "\033[1;32m==> Downloading necesary tool: cmake\033[0m"
     cd $DOWNDIR
-    $wget –quiet https://github.com/Kitware/CMake/releases/download/v3.17.0-rc2/cmake-3.17.0-rc2.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/Kitware/CMake/releases/download/v3.17.0-rc2/cmake-3.17.0-rc2.tar.gz --no-check-certificate --inet4-only
     tar -zxf cmake-3.17.0-rc2.tar.gz
     cd cmake-3.17.0-rc2
     ./bootstrap --prefix=$PREFIX --no-system-libs --parallel=4 --datadir=/share/cmake --mandir=/share/man --docdir=/share/doc/cmake --sphinx-html --sphinx-man --system-zlib --system-bzip2 --system-curl &> $CONFIGURE/cmake.log
@@ -279,7 +279,7 @@ function get_ready_for_two(){
 # building apt goes
 function build_adns(){
     cd $DOWNDIR
-    $wget –quiet https://www.chiark.greenend.org.uk/~ian/adns/ftp/adns-1.5.1.tar.gz --no-check-certificate --inet4-only
+    $wget https://www.chiark.greenend.org.uk/~ian/adns/ftp/adns-1.5.1.tar.gz --no-check-certificate --inet4-only
     tar -xzf adns-1.5.1.tar.gz
     cd adns-1.5.1
     ./configure --prefix=$PREFIX --disable-dynamic &> $CONFIGURE/adns.log
@@ -289,7 +289,7 @@ function build_adns(){
 
 function build_bison(){
     cd $DOWNDIR
-    $wget –quiet https://ftp.gnu.org/gnu/bison/bison-3.5.3.tar.xz --no-check-certificate --inet4-only
+    $wget https://ftp.gnu.org/gnu/bison/bison-3.5.3.tar.xz --no-check-certificate --inet4-only
     tar -xzf bison-3.5.3.tar.xz
     cd bison-3.5.3
     ./configure --disable-dependency-tracking --prefix=$PREFIX &> $CONFIGURE/bison.log
@@ -299,7 +299,7 @@ function build_bison(){
 
 function build_gettext(){
     cd $DOWNDIR
-    $wget –quiet https://ftpmirror.gnu.org/gettext/gettext-0.20.1.tar.xz --no-check-certificate --inet4-only
+    $wget https://ftpmirror.gnu.org/gettext/gettext-0.20.1.tar.xz --no-check-certificate --inet4-only
     tar -xzf gettext-0.20.1.tar.xz
     cd gettext-0.20.1
     ./configure --disable-dependency-tracking --disable-silent-rules --disable-debug --prefix=$PREFIX --with-included-gettext gl_cv_func_ftello_works=yes --with-included-glib --with-included-libcroco --with-included-libunistring --disable-java --disable-csharp --without-git --without-cvs --without-xz &> $CONFIGURE/gettext.log
@@ -309,7 +309,7 @@ function build_gettext(){
 
 function build_texinfo(){
     cd $DOWNDIR
-    $wget –quiet https://ftpmirror.gnu.org/texinfo/texinfo-6.7.tar.xz --no-check-certificate --inet4-only
+    $wget https://ftpmirror.gnu.org/texinfo/texinfo-6.7.tar.xz --no-check-certificate --inet4-only
     tar -xzf texinfo-6.7.tar.xz
     cd texinfo-6.7
     ./configure --disable-dependency-tracking --disable-install-warnings --prefix=$PREFIX &> $CONFIGURE/textinfo.log
@@ -319,7 +319,7 @@ function build_texinfo(){
 
 function build_coreutils(){
     cd $DOWNDIR
-    $wget –quiet https://ftp.gnu.org/gnu/coreutils/coreutils-8.32.tar.xz --no-check-certificate --inet4-only
+    $wget https://ftp.gnu.org/gnu/coreutils/coreutils-8.32.tar.xz --no-check-certificate --inet4-only
     sudo chown $SUDO_USER coreutils-8.32.tar.xz
     tar -xzf coreutils-8.32.tar.xz
     sudo chown -R $SUDO_USER coreutils-8.32
@@ -334,7 +334,7 @@ EOF
 
 function build_gmp(){
     cd $DOWNDIR
-    $wget –quiet https://ftp.gnu.org/gnu/gmp/gmp-6.2.0.tar.xz --no-check-certificate --inet4-only
+    $wget https://ftp.gnu.org/gnu/gmp/gmp-6.2.0.tar.xz --no-check-certificate --inet4-only
     tar -xzf gmp-6.2.0.tar.xz
     cd gmp-6.2.0
     ./configure --prefix=$PREFIX --enable-cxx --with-pic &> $CONFIGURE/gmp.log
@@ -344,7 +344,7 @@ function build_gmp(){
 
 function build_gengeopt(){
     cd $DOWNDIR
-    $wget –quiet https://ftpmirror.gnu.org/gengetopt/gengetopt-2.23.tar.xz --no-check-certificate --inet4-only
+    $wget https://ftpmirror.gnu.org/gengetopt/gengetopt-2.23.tar.xz --no-check-certificate --inet4-only
     tar -xzf gengetopt-2.23.tar.xz
     cd gengetopt-2.23
     ./configure --disable-dependency-tracking --prefix=$PREFIX --mandir=$PREFIX/share/man &> $CONFIGURE/gengetopt.log
@@ -354,7 +354,7 @@ function build_gengeopt(){
 
 function build_libunistring(){
     cd $DOWNDIR
-    $wget –quiet https://ftpmirror.gnu.org/libunistring/libunistring-0.9.10.tar.xz --no-check-certificate --inet4-only
+    $wget https://ftpmirror.gnu.org/libunistring/libunistring-0.9.10.tar.xz --no-check-certificate --inet4-only
     tar -xzf libunistring-0.9.10.tar.xz
     cd libunistring-0.9.10
     ./configure --disable-dependency-tracking --disable-silent-rules --prefix=$PREFIX &> $CONFIGURE/libunistring.log
@@ -365,7 +365,7 @@ function build_libunistring(){
 
 function build_libidn2(){
     cd $DOWNDIR
-    $wget –quiet https://ftpmirror.gnu.org/libidn/libidn2-2.3.0.tar.gz --no-check-certificate --inet4-only
+    $wget https://ftpmirror.gnu.org/libidn/libidn2-2.3.0.tar.gz --no-check-certificate --inet4-only
     tar -xzf libidn2-2.3.0.tar.gz
     cd libidn2-2.3.0
     ./configure --disable-dependency-tracking --disable-silent-rules --prefix=$PREFIX --with-libintl-prefix=$PREFIX &> $CONFIGURE/libidn2.log
@@ -375,7 +375,7 @@ function build_libidn2(){
 
 function build_libtasn1(){
     cd $DOWNDIR
-    $wget –quiet https://ftpmirror.gnu.org/libtasn1/libtasn1-4.16.0.tar.gz --no-check-certificate --inet4-only
+    $wget https://ftpmirror.gnu.org/libtasn1/libtasn1-4.16.0.tar.gz --no-check-certificate --inet4-only
     tar -xzf libtasn1-4.16.0.tar.gz
     cd libtasn1-4.16.0
     ./configure --prefix=$PREFIX --disable-dependency-tracking --disable-silent-rules &> $CONFIGURE/libtasn1.log
@@ -385,7 +385,7 @@ function build_libtasn1(){
 
 function build_nettle(){
     cd $DOWNDIR
-    $wget –quiet https://github.com/Quetzis/nettle-darwin/archive/nettle-3.4.1-darwin.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/Quetzis/nettle-darwin/archive/nettle-3.4.1-darwin.tar.gz --no-check-certificate --inet4-only
     tar -xzf nettle-3.4.1-darwin.tar.gz
     cd nettle-darwin-nettle-3.4.1-darwin
     ./configure --disable-dependency-tracking --prefix=$PREFIX --enable-shared --with-include-path=$PREFIX/include --with-lib-path=$PREFIX/lib &> $CONFIGURE/nettle.log
@@ -396,7 +396,7 @@ function build_nettle(){
 
 function build_libffi(){
     cd $DOWNDIR
-    $wget –quiet https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.2.1.orig.tar.gz --no-check-certificate --inet4-only
+    $wget https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.2.1.orig.tar.gz --no-check-certificate --inet4-only
     tar -xzf libffi_3.2.1.orig.tar.gz 
     cd libffi-3.2.1
     ./configure --disable-debug --disable-dependency-tracking --prefix=$PREFIX &> $CONFIGURE/libffi.log
@@ -407,7 +407,7 @@ function build_libffi(){
 
 function build_p11(){
     cd $DOWNDIR
-    $wget –quiet https://github.com/p11-glue/p11-kit/releases/download/0.23.20/p11-kit-0.23.20.tar.xz --no-check-certificate --inet4-only
+    $wget https://github.com/p11-glue/p11-kit/releases/download/0.23.20/p11-kit-0.23.20.tar.xz --no-check-certificate --inet4-only
     tar -xzf p11-kit-0.23.20.tar.xz
     cd p11-kit-0.23.20
     configure_additional
@@ -420,7 +420,7 @@ function build_p11(){
 
 function build_doxygen(){
     cd $DOWNDIR
-    $wget –quiet https://downloads.sourceforge.net/project/doxygen/rel-1.8.17/doxygen-1.8.17.src.tar.gz --no-check-certificate --inet4-only
+    $wget https://downloads.sourceforge.net/project/doxygen/rel-1.8.17/doxygen-1.8.17.src.tar.gz --no-check-certificate --inet4-only
     tar -xzf doxygen-1.8.17.src.tar.gz
     cd doxygen-1.8.17
     mkdir build
@@ -434,12 +434,12 @@ function build_doxygen(){
 function build_libevent(){
     cd $DOWNDIR
     configure_path
-    $wget –quiet https://github.com/libevent/libevent/archive/release-2.1.11-stable.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/libevent/libevent/archive/release-2.1.11-stable.tar.gz --no-check-certificate --inet4-only
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
     tar -xzf release-2.1.11-stable.tar.gz
     cd libevent-release-2.1.11-stable
     rm ./Doxyfile
-    $wget –quiet https://raw.githubusercontent.com/DiegoMagdaleno/Additional/master/libevent/Doxyfile
+    $wget https://raw.githubusercontent.com/DiegoMagdaleno/Additional/master/libevent/Doxyfile
     ./autogen.sh &> $ADDITIONAL_STEPS/libevent.log
     ./configure --disable-dependency-tracking --disable-debug-mode --prefix=$PREFIX &> $CONFIGURE/libevent.log
     make &> $MAKE/libevent.log
@@ -452,7 +452,7 @@ function build_libevent(){
 
 function build_expat(){
     cd $DOWNDIR
-    $wget –quiet https://github.com/libexpat/libexpat/releases/download/R_2_2_9/expat-2.2.9.tar.xz --no-check-certificate --inet4-only
+    $wget https://github.com/libexpat/libexpat/releases/download/R_2_2_9/expat-2.2.9.tar.xz --no-check-certificate --inet4-only
     tar -xzf expat-2.2.9.tar.xz
     cd expat-2.2.9
     ./configure --prefix=$PREFIX --mandir=$PREFIX/share/man &> $CONFIGURE/expat.log
@@ -461,14 +461,14 @@ function build_expat(){
 }
 function build_unbound(){
     cd $DOWNDIR
-    $wget –quiet https://nlnetlabs.nl/downloads/unbound/unbound-1.10.0.tar.gz --no-check-certificate --inet4-only
+    $wget https://nlnetlabs.nl/downloads/unbound/unbound-1.10.0.tar.gz --no-check-certificate --inet4-only
     tar -xzf unbound-1.10.0.tar.gz
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
     cd unbound-1.10.0
     ./configure --prefix=$PREFIX --sysconfdir=$PREFIX/etc --enable-event-api --enable-tfo-client --enable-tfo-server --with-libevent=$PREFIX --with-ssl=$PREFIX --with-libexpat=$PREFIX &> $CONFIGURE/unbound.log
     make &> $MAKE/unbound.log
     make install  &> $INSTALL/unbound.log
-    $wget –quiet https://raw.githubusercontent.com/DiegoMagdaleno/Additional/master/unbound/createuser
+    $wget https://raw.githubusercontent.com/DiegoMagdaleno/Additional/master/unbound/createuser
     chmod a+x ./createuser
     ./createuser
     cat > ./net.unbound.plist <<EOF
@@ -501,19 +501,19 @@ function build_gnutls(){
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
     configure_additional
     configure_path
-    $wget –quiet https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-3.6.12.tar.xz --no-check-certificate --inet4-only
-    tar -xzf gnutls-3.6.12.tar.xz
-    cd gnutls-3.6.12
-    ./configure --disable-dependency-tracking --disable-silent-rules --disable-static --prefix=$PREFIX --sysconfdir=$PREFIX/etc --with-default-trust-store-file=$PREFIX/etc/openssl/cert.pem --disable-guile --disable-heartbeat-support --with-p11-kit gl_cv_func_ftello_works=yes &> $CONFIGURE/gnutls.log
-    make &> $MAKE/gnutls.log
-    make install &> $INSTALL/gnutls.log
+    echo $LDFLAGS
+    $wget https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-3.6.13.tar.xz --no-check-certificate --inet4-only
+    tar -xzf gnutls-3.6.13.tar.xz
+    cd gnutls-3.6.13
+    ./configure --disable-dependency-tracking --disable-silent-rules --disable-static --prefix=$PREFIX --sysconfdir=$PREFIX/etc --with-default-trust-store-file=$PREFIX/etc/openssl/cert.pem --disable-guile --disable-heartbeat-support --with-p11-kit gl_cv_func_ftello_works=yes
+    make install LDFLAGS="-L$PREFIX/lib" export CPPFLAGS=-I$PREFIX/include
     mv $PREFIX/bin/certtool $PREFIX/bin/gnutls-certtool
     mv $PREFIX/share/man/man1/certtool.1 $PREFIX/share/man/man1/gnutls-certtool.1 
 }
 
 function build_libgpgerror(){
     cd $DOWNDIR
-    $wget –quiet https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-1.37.tar.bz2 --no-check-certificate --inet4-only
+    $wget https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-1.37.tar.bz2 --no-check-certificate --inet4-only
     tar -jxf libgpg-error-1.37.tar.bz2
     cd libgpg-error-1.37
     ./configure --disable-dependency-tracking --disable-silent-rules --prefix=$PREFIX --enable-static &> $CONFIGURE/libgpgerror.log
@@ -525,7 +525,7 @@ function build_libassuan(){
     cd $DOWNDIR
     configure_additional
     configure_path
-    $wget –quiet https://gnupg.org/ftp/gcrypt/libassuan/libassuan-2.5.3.tar.bz2 --no-check-certificate --inet4-only
+    $wget https://gnupg.org/ftp/gcrypt/libassuan/libassuan-2.5.3.tar.bz2 --no-check-certificate --inet4-only
     tar -jxf libassuan-2.5.3.tar.bz2
     cd libassuan-2.5.3
     ./configure --disable-dependency-tracking --disable-silent-rules --prefix=$PREFIX --enable-static &> $CONFIGURE/libassuan.log
@@ -535,7 +535,7 @@ function build_libassuan(){
 
 function build_libgcrypt(){
     cd $DOWNDIR
-    $wget –quiet https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-1.8.5.tar.bz2 --no-check-certificate --inet4-only
+    $wget https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-1.8.5.tar.bz2 --no-check-certificate --inet4-only
     tar -jxf libgcrypt-1.8.5.tar.bz2
     configure_additional
     configure_path
@@ -548,7 +548,7 @@ function build_libgcrypt(){
 
 function build_libksba(){
     cd $DOWNDIR
-    $wget –quiet https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/libksba/libksba-1.3.5.tar.bz2 --no-check-certificate --inet4-only
+    $wget https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/libksba/libksba-1.3.5.tar.bz2 --no-check-certificate --inet4-only
     configure_additional
     configure_path
     tar -jxf libksba-1.3.5.tar.bz2
@@ -560,7 +560,7 @@ function build_libksba(){
 
 function build_libusb(){
     cd $DOWNDIR
-    $wget –quiet https://github.com/libusb/libusb/releases/download/v1.0.23/libusb-1.0.23.tar.bz2 --no-check-certificate --inet4-only
+    $wget https://github.com/libusb/libusb/releases/download/v1.0.23/libusb-1.0.23.tar.bz2 --no-check-certificate --inet4-only
     tar -jxf libusb-1.0.23.tar.bz2
     cd libusb-1.0.23
     ./configure --disable-dependency-tracking --prefix=$PREFIX &> $CONFIGURE/libusb.log
@@ -571,7 +571,7 @@ function build_libusb(){
 
 function build_npth(){
     cd $DOWNDIR
-    $wget –quiet https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/npth/npth-1.6.tar.bz2 --no-check-certificate --inet4-only
+    $wget https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/npth/npth-1.6.tar.bz2 --no-check-certificate --inet4-only
     tar -jxf npth-1.6.tar.bz2
     cd npth-1.6
     ./configure --disable-dependency-tracking --disable-silent-rules --prefix=$PREFIX &> $CONFIGURE/npth.log
@@ -581,7 +581,7 @@ function build_npth(){
 
 function build_pinetry(){
     cd $DOWNDIR
-    $wget –quiet https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/pinentry/pinentry-1.1.0.tar.bz2 --no-check-certificate --inet4-only
+    $wget https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/pinentry/pinentry-1.1.0.tar.bz2 --no-check-certificate --inet4-only
     tar -jxf pinentry-1.1.0.tar.bz2
     configure_additional
     configure_path
@@ -596,7 +596,7 @@ function build_gnupg(){
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
     configure_additional
     configure_path
-    $wget –quiet https://github.com/gpg/gnupg/archive/gnupg-2.2.19.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/gpg/gnupg/archive/gnupg-2.2.19.tar.gz --no-check-certificate --inet4-only
     tar -zxf gnupg-2.2.19.tar.bz2
     cd gnupg-2.2.19
     ./configure --disable-dependency-tracking --disable-silent-rules --prefix=$PREFIX --sbindir=$PREFIX/bin --sysconfdir=$PREFIX/etc --enable-all-tests --enable-symcryptrun --with-pinentry-pgm=$PREFIX/bin/pinentry &> $CONFIGURE/gnupg.log
@@ -609,7 +609,7 @@ function build_gnupg(){
 
 function build_berkeleydb(){
     cd $DOWNDIR
-    $wget –quiet https://dl.bintray.com/homebrew/mirror/berkeley-db-18.1.32.tar.gz --no-check-certificate --inet4-only
+    $wget https://dl.bintray.com/homebrew/mirror/berkeley-db-18.1.32.tar.gz --no-check-certificate --inet4-only
     tar -xzf berkeley-db-18.1.32.tar.gz
     cd db-18.1.32
     cd build_unix
@@ -623,7 +623,7 @@ function build_berkeleydb(){
 
 function build_lz4(){
     cd $DOWNDIR
-    $wget –quiet https://github.com/lz4/lz4/archive/v1.9.2.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/lz4/lz4/archive/v1.9.2.tar.gz --no-check-certificate --inet4-only
     tar -xzf v1.9.2.tar.gz
     cd lz4-1.9.2
     make &> $MAKE/lz4.log
@@ -633,7 +633,7 @@ function build_lz4(){
 
 function build_libatomic(){
     cd $DOWNDIR
-    $wget –quiet https://github.com/ivmai/libatomic_ops/releases/download/v7.6.10/libatomic_ops-7.6.10.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/ivmai/libatomic_ops/releases/download/v7.6.10/libatomic_ops-7.6.10.tar.gz --no-check-certificate --inet4-only
     tar -xzf libatomic_ops-7.6.10.tar.gz
     cd libatomic_ops-7.6.10
     ./configure --disable-dependency-tracking --prefix=$PREFIX &> $CONFIGURE/libatomic.log
@@ -644,7 +644,7 @@ function build_libatomic(){
 
 function build_bdwgc(){
     cd $DOWNDIR
-    $wget –quiet https://github.com/ivmai/bdwgc/releases/download/v8.0.4/gc-8.0.4.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/ivmai/bdwgc/releases/download/v8.0.4/gc-8.0.4.tar.gz --no-check-certificate --inet4-only
     tar -xzf gc-8.0.4.tar.gz
     cd gc-8.0.4
     configure_additional
@@ -659,7 +659,7 @@ function build_bdwgc(){
 function build_w3m(){
     cd $DOWNDIR
     # NOTICE: NORMAL VERSION IS BROKEN, WE USE DEBIAN ONE
-    $wget –quiet https://github.com/tats/w3m/archive/v0.5.3+git20190105.tar.gz --no-check-certificate --inet4-only
+    $wget https://github.com/tats/w3m/archive/v0.5.3+git20190105.tar.gz --no-check-certificate --inet4-only
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
     configure_path
     configure_additional
@@ -672,7 +672,7 @@ function build_w3m(){
 
 function build_triehash(){
     cd $DOWNDIR
-    $wget –quiet https://gitlab.com/Comet_Dev/tryhashdarwin/-/archive/v0.3/tryhashdarwin-v0.3.tar.gz --no-check-certificate --inet4-only
+    $wget https://gitlab.com/Comet_Dev/tryhashdarwin/-/archive/v0.3/tryhashdarwin-v0.3.tar.gz --no-check-certificate --inet4-only
     tar -xzf tryhashdarwin-v0.3.tar.gz
     cd tryhashdarwin-v0.3
     ./install.sh --prefix=$PREFIX --with-doc
@@ -680,7 +680,7 @@ function build_triehash(){
 
 function build_gsed(){
     cd $DOWNDIR
-    $wget –quiet https://ftpmirror.gnu.org/sed/sed-4.8.tar.xz
+    $wget https://ftpmirror.gnu.org/sed/sed-4.8.tar.xz
     tar -xzf sed-4.8.tar.xz
     cd sed-4.8
     ./configure --prefix=/usr/local --disable-dependency-tracking --program-prefix=g gl_cv_func_ftello_works=yes &> $CONFIGURE/gsed.log
@@ -690,7 +690,7 @@ function build_gsed(){
 
 function build_docbook(){
     cd $DOWNDIR
-    $wget –quiet https://gitlab.com/Comet_Dev/docbookdarwinanddebian/-/archive/4.0/docbookdarwinanddebian-4.0.tar.gz
+    $wget https://gitlab.com/Comet_Dev/docbookdarwinanddebian/-/archive/4.0/docbookdarwinanddebian-4.0.tar.gz
     tar -xzf docbookdarwinanddebian-4.0.tar.gz
     cd docbookdarwinanddebian-4.0
     python3 portme.py --prefix=$PREFIX
@@ -699,7 +699,7 @@ function build_docbook(){
 
 function build_po4a(){
     cd $DOWNDIR
-    $wget –quiet https://gitlab.com/Comet_Dev/po4adarwin/-/archive/po4aDarwinInitialRelease/po4adarwin-po4aDarwinInitialRelease.tar.gz
+    $wget https://gitlab.com/Comet_Dev/po4adarwin/-/archive/po4aDarwinInitialRelease/po4adarwin-po4aDarwinInitialRelease.tar.gz
     tar -xzf po4adarwin-po4aDarwinInitialRelease.tar.gz
     cd po4adarwin-po4aDarwinInitialRelease
     chmod a+x ./install.sh
@@ -711,7 +711,7 @@ function build_po4a(){
 # today is the day. 19 of March 2020.
 function build_apt(){
     cd $DOWNDIR
-    $wget –quiet https://gitlab.com/Comet_Dev/apt/-/archive/2.0.0+DarwinFinal/apt-2.0.0+DarwinFinal.tar.gz
+    $wget https://gitlab.com/Comet_Dev/apt/-/archive/2.0.0+DarwinFinal/apt-2.0.0+DarwinFinal.tar.gz
     tar -xzf apt-2.0.0+DarwinFinal.tar.gz
     cd apt-2.0.0+DarwinFinal
     cd ./darwin/scripts
@@ -730,53 +730,10 @@ function build_apt(){
 
 
 (
-    set -e
+    #set -e
     set -o history -o histexpand
-    configure_sys_for_debug
-    build_indispensable
-    build_pkgconfig
-    build_gtar
-    build_gpatch
-    build_perl
-    build_xz
-    build_zstd
-    build_dpkg
-    get_ready_for_two
-    build_adns
-    build_bison
-    build_gettext
-    build_texinfo
-    build_coreutils
-    build_gmp
-    build_gengeopt
-    build_libunistring
-    build_libidn2
-    build_libtasn1
-    build_nettle
-    build_libffi
-    build_p11
-    build_doxygen
-    build_libevent
-    build_expat
-    build_unbound
     build_gnutls
-    build_libgpgerror
-    build_libassuan
-    build_libgcrypt
-    build_libksba
-    build_libusb
-    build_npth
-    build_pinetry
-    build_gnupg
-    build_berkeleydb
-    build_lz4
-    build_libatomic
-    build_bdwgc
-    build_w3m
-    build_triehash
-    build_gsed
-    build_docbook
-    build_po4a
+   
 )
 
 if [ $? -ne 0 ]; then

@@ -596,15 +596,19 @@ function build_gnupg(){
     export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
     configure_additional
     configure_path
-    $wget https://github.com/gpg/gnupg/archive/gnupg-2.2.19.tar.gz --no-check-certificate --inet4-only
-    tar -zxf gnupg-2.2.19.tar.bz2
-    cd gnupg-2.2.19
-    ./configure --disable-dependency-tracking --disable-silent-rules --prefix=$PREFIX --sbindir=$PREFIX/bin --sysconfdir=$PREFIX/etc --enable-all-tests --enable-symcryptrun --with-pinentry-pgm=$PREFIX/bin/pinentry &> $CONFIGURE/gnupg.log
-    make &> $MAKE/gnupg.log
-    make check &> $ADDITIONAL_STEPS/gnupg.log
-    make install &> $INSTALL/gnupg.log
-    mkdir $PREFIX/var/
-    mkdir $PREFIX/var/run
+    $wget https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.20.tar.bz2 --no-check-certificate --inet4-only
+    tar -jxf gnupg-2.2.20.tar.bz2
+    cd gnupg-2.2.20
+    ./configure --disable-dependency-tracking --disable-silent-rules --prefix=$PREFIX --sbindir=$PREFIX/bin --sysconfdir=$PREFIX/etc --enable-all-tests --enable-symcryptrun --with-pinentry-pgm=$PREFIX/bin/pinentry
+    make
+    make check
+    make install
+    if [ ! -d $PREFIX/var ]; then
+        mkdir $PREFIX/var/
+    fi
+    if [ ! -d $PREFIX/var/run ]; then
+        mkdir $PREFIX/var/run
+    fi
 }
 
 function build_berkeleydb(){
@@ -732,6 +736,33 @@ function build_apt(){
 (
     set -e
     set -o history -o histexpand
+    configure_sys_for_debug
+    build_indispensable
+    build_pkgconfig
+    build_gtar
+    build_gpatch
+    build_perl
+    build_xz
+    build_zstd
+    build_dpkg
+    get_ready_for_two
+    build_adns
+    build_bison
+    build_gettext
+    build_texinfo
+    build_coreutils
+    build_gmp
+    build_gengeopt
+    build_libunistring
+    build_libidn2
+    build_libtasn1
+    build_nettle
+    build_libffi
+    build_p11
+    build_doxygen
+    build_libevent
+    build_expat
+    build_unbound
     build_gnutls
     build_libgpgerror
     build_libassuan

@@ -3,13 +3,6 @@ DOWNDIR=/tmp
 PREFIX=/opt/neo
 wget=$PREFIX/bin/wget
 
-err() {
-    echo "Error occurred:"
-    awk 'NR>L-4 && NR<L+4 { printf "%-5d%3s%s\n",NR,(NR==L?">>>":""),$0 }' L=$1 $0
-}
-
-trap 'err $LINENO' ERR
-
 
 if [ "$EUID" -ne 0 ]; then
 	echo "We are not running as root! Attempting to elevate privilages via sudo!"
@@ -17,12 +10,10 @@ if [ "$EUID" -ne 0 ]; then
     exit
 fi
 
-if type xcode-select >&- && xpath=$( xcode-select --print-path ) &&
-   test -d "${xpath}" && test -x "${xpath}" ; then
-   echo "We have command line tools!"
-else
-    echo "Command line tools aren't installed, please install command line tools"
-    exit
+has_xcode=$(xcode-select -p 1>/dev/null;echo $?)
+if [ $has_xcode != "0" ]; then
+    printf "You don't have command line tools installed, please install them\nthen rerun this script\n"
+    exit 1
 fi
 
 function configure_path(){
